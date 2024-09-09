@@ -1,15 +1,13 @@
-
 ---
 title: "Second project in Solidity"
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
 tags:
-
+  
   - readability
   - standard
 ---
-
 The distribution of an inheritance after the owner of the contract has passed away. 
 
 ```
