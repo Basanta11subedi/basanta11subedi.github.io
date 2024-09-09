@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Solidity"
+title: "First project in Solidity"
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
