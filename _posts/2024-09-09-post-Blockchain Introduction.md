@@ -1,5 +1,5 @@
 ---
-title: "Introduction of Blockchain"
+title: "Introduction to Blockchain"
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
