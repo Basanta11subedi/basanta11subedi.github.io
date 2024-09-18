@@ -1,5 +1,5 @@
 ---
-title: "Third projeect in Solidity"
+title: "Third project in Solidity"
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
