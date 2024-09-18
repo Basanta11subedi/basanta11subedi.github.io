@@ -116,3 +116,4 @@ contract BallotTest {
 - **Return Statement**: Returns `true` if the winning proposal is the one at index `0`, otherwise returns `false`.
 
 That's a detailed explanation of each syntax in the code provided. This contract tests basic functionality such as voting and checking the winning proposal.
+
