@@ -1,5 +1,5 @@
 ---
-title: "Introduction to DeFi"
+title: "DeFi"
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
