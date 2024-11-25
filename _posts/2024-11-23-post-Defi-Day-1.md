@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Solidity"
+title: "Introduction to DeFi"
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
