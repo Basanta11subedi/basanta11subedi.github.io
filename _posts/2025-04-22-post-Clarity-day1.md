@@ -1,5 +1,5 @@
 ---
-title: "Learning Clarity Day1"
+title: "Learning Clarity"
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
