@@ -1,5 +1,5 @@
 ---
-title: "CrowdFunding"
+title: "CrowdFunding (solidity)"
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
