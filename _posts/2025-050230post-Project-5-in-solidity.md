@@ -1,5 +1,5 @@
 ---
-title: "How to build NFT MarketPlace"
+title: "Cafe"
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
