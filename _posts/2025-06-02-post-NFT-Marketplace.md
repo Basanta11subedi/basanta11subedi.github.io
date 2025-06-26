@@ -15,14 +15,14 @@ NFTs—short for *non-fungible tokens*—are digital assets with unique identifi
 
 An **NFT marketplace** is a digital platform where users can mint, buy, sell, and trade NFTs. These marketplaces serve as hubs for creators and collectors to exchange unique digital assets.
 
-## 2. Prerequisties
+## 2. Prerequisities
 
 1. Familier with clarity
-    - Visit this link: https://book.clarity-lang.org/ or https://docs.hiro.so/stacks/clarity
+   [https://book.clarity-lang.org/] or [https://docs.hiro.so/stacks/clarity]
 2. Familier with Stacks
-    - Visit this link: https://docs.stacks.co/ or https://docs.hiro.so/stacks/stacks.js
+    [https://docs.stacks.co/] or [https://docs.hiro.so/stacks/stacks.js]
 3. Familier with NFTs and SIP-009 
-    - Visit this link: https://book.clarity-lang.org/ch10-01-sip009-nft-standard.html
+    [https://book.clarity-lang.org/ch10-01-sip009-nft-standard.html]
 
 ## 3. Implementing the NFT MarketPlace
 
@@ -36,7 +36,7 @@ To implement the NFT marketplace, I wrote two smart contracts. One is for mintin
 ;; clarity version- 3
 ```
 
-Explanation: The contract name is SimpleNFt which implements sip-009 nft standard. The smart contract code is written in clarity version 3.
+- The contract name is SimpleNFt which implements sip-009 nft standard. The smart contract code is written in clarity version 3.
 
 🔗 **Trait Implementation**
 
@@ -49,8 +49,8 @@ Explanation: The contract name is SimpleNFt which implements sip-009 nft standar
 
 ```
     
-    (define-trait sip009-nft-trait
-		(
+  (define-trait sip009-nft-trait (
+		
     ;; Last token ID, limited to uint range
 		(get-last-token-id () (response uint uint))
     
@@ -62,7 +62,8 @@ Explanation: The contract name is SimpleNFt which implements sip-009 nft standar
 
     ;; Transfer from the sender to a new principal
     (transfer (uint principal principal) (response bool uint))
-))
+  )
+)
 
 ```
 
@@ -235,9 +236,7 @@ These **change state** on the blockchain.
 - Prevents future `set-token-uri` calls.
 - In this example, the owner check is placeholder (`tx-sender == tx-sender`) – should be replaced with a real check for contract owner.
 
-So the code look like this:
-
-Contract address: ST390VFVZJA4WP7QSZN0RTSGQDAG2P9NPN3X1ATDX.SimpleNFT
+## SimpleNFT
 
 ```
 ;; SimpleNFT - A basic NF contract for stacks blockchain
@@ -330,6 +329,7 @@ Contract address: ST390VFVZJA4WP7QSZN0RTSGQDAG2P9NPN3X1ATDX.SimpleNFT
   )
 )
 ```
+- Contract address: ST390VFVZJA4WP7QSZN0RTSGQDAG2P9NPN3X1ATDX.SimpleNFT
 
 ### 3.2 MarketPlace.clar
 
@@ -671,9 +671,7 @@ Includes:
 - Transfers total fees to contract owner.
 - Resets fee counter to zero.
 
-So the code look like this:
-
-Contract address: ST390VFVZJA4WP7QSZN0RTSGQDAG2P9NPN3X1ATDX.MarketPlace
+## MarketPlace code
 
 ```
 ;; Makrketplace contract where users can list, unlist and can sell their nfts
@@ -852,3 +850,4 @@ Contract address: ST390VFVZJA4WP7QSZN0RTSGQDAG2P9NPN3X1ATDX.MarketPlace
  )
 )
 ```
+- Contract address: ST390VFVZJA4WP7QSZN0RTSGQDAG2P9NPN3X1ATDX.MarketPlace
