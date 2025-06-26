@@ -62,21 +62,17 @@ author:
   avatar : "/assets/images/bio-photo.jpg"
   bio    : "I am a passionate blockchain developer with a strong focus on building secure and decentralized applications. I specialize in smart contract development on both Ethereum and Stacks blockchain, leveraging technologies such as Solidity, Clarity, Ethers.js, and Stacks.js to bring Web3 ideas to life."
   links:
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
-      url: "https://basanta11subedi.github.io///"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+    - label: "BA Token website"
+      url: "https://mybatoken.vercel.app"
+    - label: "CrowdFunding"
+      url: "https://crowdfunding-sigma-kohl.vercel.app/"
+
 
 footer:
   links:
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://basanta11subedi.github.io///"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/"
