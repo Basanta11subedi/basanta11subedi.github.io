@@ -15,14 +15,17 @@ NFTs—short for *non-fungible tokens*—are digital assets with unique identifi
 
 An **NFT marketplace** is a digital platform where users can mint, buy, sell, and trade NFTs. These marketplaces serve as hubs for creators and collectors to exchange unique digital assets.
 
-## 2. Prerequisities
+## 2. Prerequisites
 
-1. Familier with clarity
-   [https://book.clarity-lang.org/] or [https://docs.hiro.so/stacks/clarity]
-2. Familier with Stacks
-    [https://docs.stacks.co/] or [https://docs.hiro.so/stacks/stacks.js]
-3. Familier with NFTs and SIP-009 
-    [https://book.clarity-lang.org/ch10-01-sip009-nft-standard.html]
+1. Familiar with Clarity  
+   [Clarity Book](https://book.clarity-lang.org/) or [Clarity Docs](https://docs.hiro.so/stacks/clarity)
+
+2. Familiar with Stacks  
+   [Stacks Docs](https://docs.stacks.co/) or [Stacks.js Docs](https://docs.hiro.so/stacks/stacks.js)
+
+3. Familiar with NFTs and SIP-009  
+   [SIP-009 NFT Standard](https://book.clarity-lang.org/ch10-01-sip009-nft-standard.html)
+
 
 ## 3. Implementing the NFT MarketPlace
 
