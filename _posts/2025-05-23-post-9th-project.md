@@ -746,92 +746,49 @@ contract FreelancePlatform {
 }
 
 ```
+The contract implements a decentralized freelance platform with escrow functionality, allowing clients to post jobs, freelancers to submit proposals, and secure payments through milestones.
 
-### 🧾 File Header & License
+## **License and Pragma**
 
-```solidity
-
+```
 // SPDX-License-Identifier: UNLICENSED
-
-```
-
-This line declares the license type. `UNLICENSED` means you're **not granting others rights to use or copy** the code by default.
-
-```solidity
-
 pragma solidity ^0.8.19;
-
 ```
 
-Specifies the **Solidity compiler version** requirement — this contract must be compiled with version `0.8.19` or higher but less than `0.9.0`.
+- **SPDX-License-Identifier**: Specifies the contract is unlicensed
+- **Pragma**: Sets the Solidity compiler version to 0.8.19 or higher
 
----
+## **Contract Structure**
 
-### 🏗 Contract Declaration
-
-```solidity
-
-contract FreelancePlatform {
+### **State Variables**
 
 ```
-
-Defines a new contract named `FreelancePlatform`. This is like a **class** in other languages (e.g., Java, Python), and contains **variables, functions, and structs**.
-
----
-
-### 🔐 State Variables
-
-```solidity
-
 address public owner;
-
-```
-
-Stores the address of the contract's creator/owner. `public` generates a getter automatically.
-
-```solidity
-
-uint256 public platformFee;
+uint256 public platformFee; // Platform fee in basis points (1% = 100)
 uint256 public jobCount;
 uint256 public proposalCount;
 uint256 public contractCount;
-
 ```
 
-- `uint256`: 256-bit unsigned integer (common in Solidity).
-- These variables track overall **platform configuration** and counters for IDs.
+- **owner**: Address of the contract deployer (platform admin)
+- **platformFee**: Percentage fee taken by the platform (in basis points)
+- **jobCount**, **proposalCount**, **contractCount**: Counters for tracking IDs
 
----
+### **Enums**
 
-### 🧾 Enums
-
-```solidity
-
+```
 enum JobStatus { Open, InProgress, Completed, Cancelled }
-
-```
-
-Defines possible statuses for a job — like an **enum in C/C++/Java**. Each value is assigned a number (starting from 0).
-
-Similarly:
-
-```solidity
-
 enum ContractStatus { Created, Started, Completed, Cancelled, Disputed }
 enum DisputeStatus { None, InProgress, ResolvedForClient, ResolvedForFreelancer }
-
 ```
 
----
+- Define status types for jobs, contracts, and disputes
 
-### 📦 Structs (Custom Data Types)
+### **Structs**
 
-These are **like objects** or records that hold multiple related fields.
+### **Profile**
 
-### 📁 Profile
-
-```solidity
-
+```
 struct Profile {
     string name;
     string description;
@@ -839,201 +796,191 @@ struct Profile {
     bool isRegistered;
     bool isClient;
     bool isFreelancer;
-    ...
+    uint256 clientRating; // Average rating as client (out of 100)
+    uint256 clientRatingCount;
+    uint256 freelancerRating; // Average rating as freelancer (out of 100)
+    uint256 freelancerRatingCount;
+    uint256[] completedJobs;
 }
-
 ```
 
-Each user has a profile with basic info, roles (client/freelancer), and ratings.
+- Stores user profile information including ratings and completed jobs
 
-### 📋 Job
+### **Job**
 
-```solidity
-
+```
 struct Job {
     uint256 id;
     address client;
     string title;
-    ...
+    string description;
+    string[] requiredSkills;
+    uint256 budget;
+    uint256 deadline; // Unix timestamp
+    JobStatus status;
+    uint256[] proposalIds;
+    uint256 selectedProposal;
+    uint256 contractId;
+    bool isFixed; // Fixed price vs hourly
+    uint256 createdAt;
 }
-
 ```
 
-Each job posted has a unique `id`, a `client` address, description, skills required, status, and tracking fields.
+- Contains job details posted by clients
 
-### 💬 Proposal
+### **Proposal**
 
-```solidity
-
+```
 struct Proposal {
     uint256 id;
     uint256 jobId;
     address freelancer;
-    ...
+    uint256 price; // Total price for fixed jobs OR hourly rate for hourly jobs
+    string description;
+    uint256 estimatedTime; // In days for fixed jobs OR hours for hourly jobs
+    uint256 createdAt;
+    bool selected;
 }
-
 ```
 
-This represents an offer by a freelancer to do a job.
+- Freelancer's bid for a job
 
-### 📜 WorkContract
+### **WorkContract**
 
-```solidity
-
+```
 struct WorkContract {
     uint256 id;
-    ...
+    uint256 jobId;
+    uint256 proposalId;
+    address client;
+    address freelancer;
+    uint256 amount;
+    uint256 deposit; // Client's deposit
+    ContractStatus status;
+    uint256 startDate;
+    uint256 endDate;
+    uint256 createdAt;
+    uint256 completedAt;
+    DisputeStatus disputeStatus;
+    string disputeReason;
+    uint256 milestones; // Number of milestones
+    uint256 completedMilestones; // Number of completed milestones
     mapping(uint256 => Milestone) milestoneDetails;
 }
-
 ```
 
-Represents a **binding agreement** between client and freelancer, includes payment info, status, and milestones.
+- Contract between client and freelancer with payment details
 
-### ✅ Milestone
+### **Milestone**
 
-```solidity
-
+```
 struct Milestone {
     string description;
     uint256 amount;
     bool completed;
     bool paid;
 }
-
 ```
 
-Each milestone is a part of a contract’s work — it defines **partial goals**, helping break down larger tasks.
+- Payment milestones within a contract
 
----
+### **Mappings**
 
-### 🔗 Mappings
-
-Mappings are like **hash maps** or **dictionaries**:
-
-```solidity
-
+```
 mapping(address => Profile) public profiles;
-
+mapping(uint256 => Job) public jobs;
+mapping(uint256 => Proposal) public proposals;
+mapping(uint256 => WorkContract) public contracts;
+mapping(address => uint256[]) public clientJobs;
+mapping(address => uint256[]) public freelancerProposals;
+mapping(address => uint256[]) public freelancerContracts;
+mapping(address => uint256[]) public clientContracts;
 ```
 
-Maps each address to a `Profile`.
+- Store relationships between addresses and their jobs/proposals/contracts
 
-Others include:
+### **Events**
 
-- `mapping(uint256 => Job)` → job ID to Job struct
-- `mapping(address => uint256[])` → address to a list of job/contract IDs
+Numerous events emitted for important contract actions like:
 
----
+- Profile creation
+- Job posting
+- Proposal submission/selection
+- Contract creation/completion
+- Milestone actions
+- Dispute handling
+- Fund transfers
+- Ratings
 
-### 🔊 Events
-
-```solidity
-
-event ProfileCreated(address indexed user, bool isClient, bool isFreelancer);
-
-```
-
-Events are **logs** emitted to the blockchain. Off-chain apps (like UIs or subgraphs) listen to them.
-
-`indexed` allows filtering by that field.
-
----
-
-### 🛡 Modifiers
-
-Modifiers are **reusable checks** before function logic runs:
-
-```solidity
-
-modifier onlyOwner() {
-    require(msg.sender == owner, "Only owner can call this function");
-    _;
-}
+### **Modifiers**
 
 ```
-
-- `require(...)` halts execution if condition fails.
-- `_` is a placeholder — the wrapped function’s code goes here.
-
-Examples:
-
-- `onlyRegistered`
-- `onlyFreelancer`
-- `onlyJobClient(uint256 _jobId)` → requires sender to be the job’s creator
-
----
-
-### 🏗 Constructor
-
-```solidity
-
-constructor() {
-    owner = msg.sender;
-    platformFee = 100;
-    ...
-}
-
+onlyOwner()
+onlyRegistered()
+onlyClient()
+onlyFreelancer()
+onlyJobClient(uint256 _jobId)
+onlyContractParticipant(uint256 _contractId)
 ```
 
-Runs **once** when the contract is deployed. Sets:
+- Access control modifiers to restrict function calls
 
-- `owner` = address that deployed the contract.
-- `platformFee` = 100 (basis points = 1%).
+## **Core Functions**
 
----
+### **1. Profile Management**
 
-### ⚙ Functions (Partially implemented)
+- **`registerProfile()`**: Creates a new user profile
+- **`updateProfile()`**: Updates existing profile information
 
-### 📌 `updatePlatformFee`
+### **2. Job Management**
 
-```solidity
+- **`postJob()`**: Allows clients to create new job postings
+- **`submitProposal()`**: Lets freelancers bid on jobs
+- **`selectProposal()`**: Client selects a freelancer's proposal
 
-function updatePlatformFee(uint256 _newFee) external onlyOwner {
-    require(_newFee <= 1000, "Fee cannot exceed 10%");
-    platformFee = _newFee;
-}
+### **3. Contract Management**
 
-```
+- **`addMilestones()`**: Client defines payment milestones
+- **`depositFunds()`**: Client deposits funds to start contract
+- **`completeMilestone()`**: Freelancer marks milestone as complete
+- **`releaseMilestonePayment()`**: Client releases payment for completed milestone
 
-- `external` = can be called from outside only.
-- `onlyOwner` = only owner can change the platform fee.
+### **4. Dispute Resolution**
 
-### 👤 `registerProfile`
+- **`raiseDispute()`**: Either party can raise a dispute
+- **`resolveDispute()`**: Platform owner resolves disputes and distributes funds
 
-```solidity
+### **5. Rating System**
 
-function registerProfile(...) external {
-    require(!profiles[msg.sender].isRegistered, "Already registered");
-    require(_isClient || _isFreelancer, "Must choose role");
-    ...
-}
+- **`rateUser()`**: Allows participants to rate each other after job completion
 
-```
+### **6. View Functions**
 
-Registers a new user profile. Partially written — needs assignment and event emit.
+Various functions to retrieve contract, job, profile, and milestone details
 
----
+### **7. Utility Functions**
 
-That’s the full breakdown **up to where the code stops**.
+- **`updatePlatformFee()`**: Owner can adjust platform fee
+- **`emergencyWithdraw()`**: Owner can withdraw funds in emergency
 
----
+## **Workflow**
 
-### 🧠 Summary: Solidity Concepts Used
+1. Users register as clients or freelancers
+2. Clients post jobs with requirements and budget
+3. Freelancers submit proposals for jobs
+4. Client selects a proposal, creating a contract
+5. Client adds payment milestones and deposits funds
+6. Freelancer completes milestones which client approves and pays
+7. After all milestones are paid, contract completes
+8. Parties can rate each other
 
-| Concept | Meaning |
-| --- | --- |
-| `contract` | Smart contract definition |
-| `struct` | Group multiple variables under one name |
-| `enum` | Finite list of named options |
-| `mapping` | Key-value storage |
-| `modifier` | Pre-condition logic wrappers |
-| `require()` | Ensures conditions are met |
-| `msg.sender` | The caller's address |
-| `address` | Ethereum wallet address |
-| `uint256` | 256-bit unsigned integer |
-| `event` | Blockchain log for tracking actions |
-| `constructor()` | Runs once at deployment |
-| `external` | Function visible externally |
-| `public` | Accessible from everywhere + getter |
-| `bool` | Boolean true/false |
+## **Security Features**
+
+- Role-based access control (modifiers)
+- Funds held in escrow until milestones are completed
+- Dispute resolution mechanism
+- Input validation on all functions
+- Platform fee deducted from payments
+- Emergency withdrawal for owner
+
+This contract provides a complete decentralized solution for freelance work with secure payment handling and dispute resolution.
