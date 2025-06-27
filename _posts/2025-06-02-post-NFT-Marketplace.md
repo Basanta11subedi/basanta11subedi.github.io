@@ -80,18 +80,21 @@ To implement the NFT marketplace, I wrote two smart contracts. One is for mintin
 (define-constant ERR-NOT-AUTHORIZED (err u100))
 (define-constant ERR-NOT-FOUND (err u101))
 (define-constant ERR-METADATA-FROZEN (err u102))
+
 ```
 
 - Predefined **error codes** to use throughout the contract for clarity and consistency.
+
 
 📦 **State Variables**
 
 ```
 ;; Data variables
+(define-data-var contract-owner principal tx-sender)
 (define-data-var last-token-id uint u0)
 (define-data-var metadata-frozen bool  false)
 ```
-
+- `contract-owner`: Stores the address of the contract owner.
 - `last-token-id`: Keeps track of the latest minted token ID.
 - `metadata-frozen`: Prevents changes to metadata after it's locked.
 
@@ -228,7 +231,7 @@ These **change state** on the blockchain.
 ```
 (define-public (freeze-metadata)
   (begin
-    (asserts! (is-eq tx-sender tx-sender) ERR-NOT-AUTHORIZED) ;; Replace with your owner check if needed
+    (asserts! (is-eq tx-sender (var-get contract-owner tx-sender)) ERR-NOT-AUTHORIZED) ;; 
     (var-set metadata-frozen true)
     (ok true)
   )
@@ -237,7 +240,7 @@ These **change state** on the blockchain.
 
 - Freezes metadata updates globally.
 - Prevents future `set-token-uri` calls.
-- In this example, the owner check is placeholder (`tx-sender == tx-sender`) – should be replaced with a real check for contract owner.
+
 
 ## SimpleNFT
 
