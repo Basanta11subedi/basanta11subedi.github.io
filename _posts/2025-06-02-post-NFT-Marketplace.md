@@ -29,7 +29,7 @@ An **NFT marketplace** is a digital platform where users can mint, buy, sell, an
 
 ## 3. Implementing the NFT MarketPlace
 
-To implement the NFT marketplace, I wrote two smart contracts. One is for minting and trasnfer NFTs using the NFT trait, and the other is for the marketplace, where users can list, unlist, buy, and transfer NFTs between accounts. I will explain all the code in detail and provide the contract address link so you can review it.
+To implement the NFT marketplace, I wrote two smart contracts. One is for minting and transfer NFTs using the NFT trait, and the other is for the marketplace, where users can list, unlist, buy, and transfer NFTs between accounts. I will explain all the code in detail and provide the contract address link so you can review it.
 
 ### 3.1 SimpleNFT.clar
 
