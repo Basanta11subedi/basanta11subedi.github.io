@@ -1,5 +1,5 @@
 ---
-title: " Multiplayer Counter contract (clarity)"
+title: " Stacking"
 excerpt_separator: "<!--more-->"
 categories:
   - Blog
