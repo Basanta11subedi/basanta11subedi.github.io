@@ -10,8 +10,6 @@ tags:
 ---
 
 
-# **Understanding Stacking in the Stacks Blockchain**
-
 ## **Introduction**
 
 Stacking is a fundamental mechanism in the Stacks blockchain that allows STX holders to participate in the Proof of Transfer (PoX) consensus model. By locking up their STX tokens, stackers contribute to network security and earn Bitcoin (BTC) rewards in return.
